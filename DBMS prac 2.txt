@@ -1,0 +1,181 @@
+Microsoft Windows [Version 10.0.26100.4652]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Users\RITESH>mysql -h localhost -u root -p
+Enter password: ***********
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 13
+Server version: 8.0.43 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2025, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> create database inventory;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> use inventory
+Database changed
+mysql> create table product(pid int primary key,pname varchar(30),price float);
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> create table sales(sid int,pid int,qty int,FOREIGN KEY(pid)REFERENCES product(pid));
+Query OK, 0 rows affected (0.08 sec)
+
+mysql> create table supplier (splid int,sname varchar(60),address varchar(80));
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> alter table supplier add primary key(splid), add CONSTRAINT chk CHECK(splid>900);
+Query OK, 0 rows affected (0.40 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc product
+    -> ;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| pid   | int         | NO   | PRI | NULL    |       |
+| pname | varchar(30) | YES  |     | NULL    |       |
+| price | float       | YES  |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+3 rows in set (0.01 sec)
+
+mysql> desc sales;
++-------+------+------+-----+---------+-------+
+| Field | Type | Null | Key | Default | Extra |
++-------+------+------+-----+---------+-------+
+| sid   | int  | YES  |     | NULL    |       |
+| pid   | int  | YES  | MUL | NULL    |       |
+| qty   | int  | YES  |     | NULL    |       |
++-------+------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> desc supplier;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| splid   | int         | NO   | PRI | NULL    |       |
+| sname   | varchar(60) | YES  |     | NULL    |       |
+| address | varchar(80) | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> create user 'rajesj'@localhost identified by 'r123';
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> grant select on inventory.*TO'rajesj'@localhost;
+Query OK, 0 rows affected (0.26 sec)
+
+mysql> create user 'mohit'@localhost identified by 'm123';
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> grant all privileges on inventory.*TO'mohit'@localhost;
+Query OK, 0 rows affected (0.01 sec)
+
+USER MOHIT :
+
+Windows PowerShell
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+Install the latest PowerShell for new features and improvements! https://aka.ms/PSWindows
+
+PS C:\Users\RITESH> mysql -h localhost -u mohit -p
+Enter password: ****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 14
+Server version: 8.0.43 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2025, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> use inventory;
+Database changed
+mysql> desc product;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| pid   | int         | NO   | PRI | NULL    |       |
+| pname | varchar(30) | YES  |     | NULL    |       |
+| price | float       | YES  |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+3 rows in set (0.01 sec)
+
+mysql> desc supplier;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| splid   | int         | NO   | PRI | 5       |       |
+| sname   | varchar(60) | YES  |     | NULL    |       |
+| address | varchar(80) | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> alter table supplier add email varchar(50);
+Query OK, 0 rows affected (0.11 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc supplier;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| splid   | int         | NO   | PRI | 5       |       |
+| sname   | varchar(60) | YES  |     | NULL    |       |
+| address | varchar(80) | YES  |     | NULL    |       |
+| email   | varchar(50) | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+USER Rajesh :
+
+Windows PowerShell
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+Install the latest PowerShell for new features and improvements! https://aka.ms/PSWindows
+
+PS C:\Users\RITESH> mysql -h localhost -u rajesj -p
+Enter password: ****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 15
+Server version: 8.0.43 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2025, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> use inventory;
+Database changed
+mysql> desc supplier;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| splid   | int         | NO   | PRI | 5       |       |
+| sname   | varchar(60) | YES  |     | NULL    |       |
+| address | varchar(80) | YES  |     | NULL    |       |
+| email   | varchar(50) | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+4 rows in set (0.01 sec)
+
+mysql> alter table supplier rename column supplier to provider
+    -> ;
+ERROR 1142 (42000): ALTER command denied to user 'rajesj'@'localhost' for table 'supplier'
+mysql> show grants for'rajesj'@localhost;
++-------------------------------------------------------+
+| Grants for rajesj@localhost                           |
++-------------------------------------------------------+
+| GRANT USAGE ON *.* TO `rajesj`@`localhost`            |
+| GRANT SELECT ON `inventory`.* TO `rajesj`@`localhost` |
++-------------------------------------------------------+
+2 rows in set (0.00 sec)
