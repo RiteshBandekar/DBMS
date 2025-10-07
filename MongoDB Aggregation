@@ -1,0 +1,201 @@
+Microsoft Windows [Version 10.0.19045.6332]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Program Files\MongoDB\Server\8.2\bin>mongosh
+Current Mongosh Log ID: 68e4befda42f65cb7dcebea3
+Connecting to:          mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2.5.8
+Using MongoDB:          8.2.0
+Using Mongosh:          2.5.8
+
+For mongosh info see: https://www.mongodb.com/docs/mongodb-shell/
+
+------
+   The server generated these startup warnings when booting
+   2025-10-03T15:17:44.985+05:30: Access control is not enabled for the database. Read and write access to data and configuration is unrestricted
+------
+
+test> use Bank;
+switched to db Bank
+Bank> db.createCollection('customer');
+{ ok: 1 }
+Bank> db.customer.insertOne({_id:101, cname:'Ajay', bname:'SBI', branch:'Pune', balance:'250000'});
+{ acknowledged: true, insertedId: 101 }
+Bank> db.customer.insertOne({_id:102, cname:'Raj', bname:'SBI', branch:'Talegaon', balance:'350000'});
+{ acknowledged: true, insertedId: 102 }
+Bank> db.customer.insertOne({_id:103, cname:'Amit', bname:'SBI', branch:'Mumbai', balance:'150000'});
+{ acknowledged: true, insertedId: 103 }
+Bank> db.customer.insertOne({_id:104, cname:'Geeta', bname:'SBI', branch:'Mumbai', balance:'950000'});
+{ acknowledged: true, insertedId: 104 }
+Bank> db.customer.insertOne({_id:105, cname:'Rohan', bname:'SBI', branch:'Pune', balance:'780000'});
+{ acknowledged: true, insertedId: 105 }
+Bank> db.customer.find();
+[
+  {
+    _id: 101,
+    cname: 'Ajay',
+    bname: 'SBI',
+    branch: 'Pune',
+    balance: '250000'
+  },
+  {
+    _id: 102,
+    cname: 'Raj',
+    bname: 'SBI',
+    branch: 'Talegaon',
+    balance: '350000'
+  },
+  {
+    _id: 103,
+    cname: 'Amit',
+    bname: 'SBI',
+    branch: 'Mumbai',
+    balance: '150000'
+  },
+  {
+    _id: 104,
+    cname: 'Geeta',
+    bname: 'SBI',
+    branch: 'Mumbai',
+    balance: '950000'
+  },
+  {
+    _id: 105,
+    cname: 'Rohan',
+    bname: 'SBI',
+    branch: 'Pune',
+    balance: '780000'
+  }
+]
+Bank> db.customer.aggregate([{$group:{_id:null,total_bal:{$min:'$balance'}}}]);
+[ { _id: null, total_bal: '150000' } ]
+Bank> db.customer.aggregate([{$group:{_id:null,total_bal:{$max:'$balance'}}}]);
+[ { _id: null, total_bal: '950000' } ]
+Bank> db.customer.aggregate([{$group:{_id:null,total_bal:{$sum:'$balance'}}}]);
+[ { _id: null, total_bal: 0 } ]
+Bank> db.customer.aggregate([{$group:{_id:null,total_bal:{$last:'$balance'}}}]);
+[ { _id: null, total_bal: '780000' } ]
+Bank> db.customer.aggregate([{$group:{_id:null,total_bal:{$first:'$balance'}}}]);
+[ { _id: null, total_bal: '250000' } ]
+Bank> db.customer.aggregate([{$group:{_id:null,total_bal:{$push:'$balance'}}}]);
+[
+  {
+    _id: null,
+    total_bal: [ '250000', '350000', '150000', '950000', '780000' ]
+  }
+]
+Bank> db.customer.aggregate([{$group:{_id:null,total_bal:{$addToSet:'$balance'}}}]);
+[
+  {
+    _id: null,
+    total_bal: [ '150000', '250000', '350000', '780000', '950000' ]
+  }
+]
+Bank> db.customer.find().sort({balance:1});
+[
+  {
+    _id: 103,
+    cname: 'Amit',
+    bname: 'SBI',
+    branch: 'Mumbai',
+    balance: '150000'
+  },
+  {
+    _id: 101,
+    cname: 'Ajay',
+    bname: 'SBI',
+    branch: 'Pune',
+    balance: '250000'
+  },
+  {
+    _id: 102,
+    cname: 'Raj',
+    bname: 'SBI',
+    branch: 'Talegaon',
+    balance: '350000'
+  },
+  {
+    _id: 105,
+    cname: 'Rohan',
+    bname: 'SBI',
+    branch: 'Pune',
+    balance: '780000'
+  },
+  {
+    _id: 104,
+    cname: 'Geeta',
+    bname: 'SBI',
+    branch: 'Mumbai',
+    balance: '950000'
+  }
+]
+Bank> db.customer.find().sort({balance:-1});
+[
+  {
+    _id: 104,
+    cname: 'Geeta',
+    bname: 'SBI',
+    branch: 'Mumbai',
+    balance: '950000'
+  },
+  {
+    _id: 105,
+    cname: 'Rohan',
+    bname: 'SBI',
+    branch: 'Pune',
+    balance: '780000'
+  },
+  {
+    _id: 102,
+    cname: 'Raj',
+    bname: 'SBI',
+    branch: 'Talegaon',
+    balance: '350000'
+  },
+  {
+    _id: 101,
+    cname: 'Ajay',
+    bname: 'SBI',
+    branch: 'Pune',
+    balance: '250000'
+  },
+  {
+    _id: 103,
+    cname: 'Amit',
+    bname: 'SBI',
+    branch: 'Mumbai',
+    balance: '150000'
+  }
+]
+Indexing
+Bank> db.customer.createIndex({customerId:1});
+customerId_1
+Bank> db.customer.getIndexes();
+[
+  { v: 2, key: { _id: 1 }, name: '_id_' },
+  { v: 2, key: { customerId: 1 }, name: 'customerId_1' }
+]
+Bank> db.customer.createIndex({customerId:1},{Sparse:true});
+customerId_1
+Bank> db.customer.getIndexes();
+[
+  { v: 2, key: { _id: 1 }, name: '_id_' },
+  { v: 2, key: { customerId: 1 }, name: 'customerId_1' }
+]
+Bank> db.customer.createIndex({customerId:2},{Sparse:true});
+customerId_2
+Bank> db.customer.getIndexes();
+[
+  { v: 2, key: { _id: 1 }, name: '_id_' },
+  { v: 2, key: { customerId: 1 }, name: 'customerId_1' },
+  { v: 2, key: { customerId: 2 }, name: 'customerId_2' }
+]
+Bank> db.customer.createIndex({cId:3},{Sparse:true});
+cId_3
+Bank> db.customer.getIndexes();
+[
+  { v: 2, key: { _id: 1 }, name: '_id_' },
+  { v: 2, key: { customerId: 1 }, name: 'customerId_1' },
+  { v: 2, key: { customerId: 2 }, name: 'customerId_2' },
+  { v: 2, key: { cId: 3 }, name: 'cId_3' }
+]
+Bank>
