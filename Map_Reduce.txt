@@ -1,0 +1,259 @@
+Map Reduce Practical
+
+Football Dataset
+
+Microsoft Windows [Version 10.0.19045.6332]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Program Files\MongoDB\Server\8.2\bin>mongosh
+Current Mongosh Log ID: 68b86378cd47b53af4cebea3
+Connecting to:          mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2.5.8
+Using MongoDB:          8.2.0
+Using Mongosh:          2.5.8
+
+For mongosh info see: https://www.mongodb.com/docs/mongodb-shell/
+
+------
+   The server generated these startup warnings when booting
+   2025-09-03T07:26:11.948-07:00: Access control is not enabled for the database. Read and write access to data and configuration is unrestricted
+------
+
+test> use footballexample
+switched to db footballexample
+footballexample> db.football.find()
+[
+  {
+    _id: ObjectId('68b85ab3b4731f9532d27dfd'),
+    Teams: 'InterMiami',
+    Seasons: 2024,
+    Players: 'Lionel Messi',
+    Matches: 15,
+    Goals: 14,
+    Assists: 11,
+    'Seasons Ratings': 8.5
+  },
+  {
+    _id: ObjectId('68b85ab3b4731f9532d27dfe'),
+    Teams: 'InterMiami',
+    Seasons: 2023,
+    Players: 'Lionel Messi',
+    Matches: 14,
+    Goals: 11,
+    Assists: 5,
+    'Seasons Ratings': 8
+  },
+  {
+    _id: ObjectId('68b85ab3b4731f9532d27dff'),
+    Teams: 'PSG',
+    Seasons: '2022/2023',
+    Players: 'Lionel Messi',
+    Matches: 41,
+    Goals: 21,
+    Assists: 20,
+    'Seasons Ratings': 8.1
+  },
+  {
+    _id: ObjectId('68b85ab3b4731f9532d27e00'),
+    Teams: 'PSG',
+    Seasons: '2021/2022',
+    Players: 'Lionel Messi',
+    Matches: 34,
+    Goals: 11,
+    Assists: 14,
+    'Seasons Ratings': 7.9
+  },
+  {
+    _id: ObjectId('68b85ab3b4731f9532d27e01'),
+    Teams: 'Barcelona',
+    Seasons: '2020/2021',
+    Players: 'Lionel Messi',
+    Matches: 47,
+    Goals: 38,
+    Assists: 12,
+    'Seasons Ratings': 8.4
+  },
+  {
+    _id: ObjectId('68b85ab3b4731f9532d27e02'),
+    Teams: 'Barcelona',
+    Seasons: '2019/2020',
+    Players: 'Lionel Messi',
+    Matches: 44,
+    Goals: 31,
+    Assists: 25,
+    'Seasons Ratings': 8.3
+  },
+  {
+    _id: ObjectId('68b85ab3b4731f9532d27e03'),
+    Teams: 'Barcelona',
+    Seasons: '2018/2019',
+    Players: 'Lionel Messi',
+    Matches: 50,
+    Goals: 51,
+    Assists: 19,
+    'Seasons Ratings': 8.5
+  },
+  {
+    _id: ObjectId('68b85ab3b4731f9532d27e04'),
+    Teams: 'Barcelona',
+    Seasons: '2017/2018',
+    Players: 'Lionel Messi',
+    Matches: 54,
+    Goals: 45,
+    Assists: 18,
+    'Seasons Ratings': 8.4
+  },
+  {
+    _id: ObjectId('68b85ab3b4731f9532d27e05'),
+    Teams: 'Barcelona',
+    Seasons: '2016/2017',
+    Players: 'Lionel Messi',
+    Matches: 52,
+    Goals: 54,
+    Assists: 16,
+    'Seasons Ratings': 8.4
+  },
+  {
+    _id: ObjectId('68b85ab3b4731f9532d27e06'),
+    Teams: 'AL Nassr',
+    Seasons: '2023/2024',
+    Players: 'Cristiano Ronaldo',
+    Matches: 51,
+    Goals: 50,
+    Assists: 13,
+    'Seasons Ratings': 8.1
+  },
+  {
+    _id: ObjectId('68b85ab3b4731f9532d27e07'),
+    Teams: 'AL Nassr',
+    Seasons: '2022/2023',
+    Players: 'Cristiano Ronaldo',
+    Matches: 19,
+    Goals: 14,
+    Assists: 2,
+    'Seasons Ratings': 7.7
+  },
+  {
+    _id: ObjectId('68b85ab3b4731f9532d27e08'),
+    Teams: 'Man United',
+    Seasons: '2021/2022',
+    Players: 'Cristiano Ronaldo',
+    Matches: 16,
+    Goals: 3,
+    Assists: 2,
+    'Seasons Ratings': 7
+  },
+  {
+    _id: ObjectId('68b85ab3b4731f9532d27e09'),
+    Teams: 'Man United',
+    Seasons: '2020/2021',
+    Players: 'Cristiano Ronaldo',
+    Matches: 38,
+    Goals: 24,
+    Assists: 3,
+    'Seasons Ratings': 7.5
+  },
+  {
+    _id: ObjectId('68b85ab3b4731f9532d27e0a'),
+    Teams: 'Juventus',
+    Seasons: '2019/2020',
+    Players: 'Cristiano Ronaldo',
+    Matches: 1,
+    Goals: 0,
+    Assists: 0,
+    'Seasons Ratings': 6.7
+  },
+  {
+    _id: ObjectId('68b85ab3b4731f9532d27e0b'),
+    Teams: 'Juventus',
+    Seasons: '2018/2019',
+    Players: 'Cristiano Ronaldo',
+    Matches: 44,
+    Goals: 36,
+    Assists: 5,
+    'Seasons Ratings': 7.9
+  },
+  {
+    _id: ObjectId('68b85ab3b4731f9532d27e0c'),
+    Teams: 'Juventus',
+    Seasons: '2017/2018',
+    Players: 'Cristiano Ronaldo',
+    Matches: 43,
+    Goals: 28,
+    Assists: 10,
+    'Seasons Ratings': 7.9
+  },
+  {
+    _id: ObjectId('68b85ab3b4731f9532d27e0d'),
+    Teams: 'Real Madrid',
+    Seasons: '2016/2017',
+    Players: 'Cristiano Ronaldo',
+    Matches: 46,
+    Goals: 42,
+    Assists: 11,
+    'Seasons Ratings': 7.9
+  },
+  {
+    _id: ObjectId('68b85ab3b4731f9532d27e0e'),
+    Teams: 'Real Madrid',
+    Seasons: '2015/2016',
+    Players: 'Cristiano Ronaldo',
+    Matches: 48,
+    Goals: 51,
+    Assists: 15,
+    'Seasons Ratings': 8.6
+  },
+  {
+    _id: ObjectId('68b85ab3b4731f9532d27e0f'),
+    Teams: 'AL Hilal',
+    Seasons: '2023/2024',
+    Players: 'Neymar',
+    Matches: 5,
+    Goals: 1,
+    Assists: 2,
+    'Seasons Ratings': 7.5
+  },
+  {
+    _id: ObjectId('68b85ab3b4731f9532d27e10'),
+    Teams: 'PSG',
+    Seasons: '2022/2023',
+    Players: 'Neymar',
+    Matches: 29,
+    Goals: 18,
+    Assists: 16,
+    'Seasons Ratings': 8
+  }
+]
+Type "it" for more
+footballexample> var map=function(){emit(this.Players,this.Goals)}
+
+footballexample> var reduce=function(Players,Goals){return Array.sum(Goals)}
+
+footballexample> db.football.mapReduce(map,reduce,{out:'FootballOp'})
+DeprecationWarning: Collection.mapReduce() is deprecated. Use an aggregation instead.
+See https://mongodb.com/docs/manual/core/map-reduce for details.
+{ result: 'FootballOp', ok: 1 }
+footballexample> db.FootballOp.find()
+[
+  { _id: 'Marcus Rashford', value: 123 },
+  { _id: 'Jules Kounde', value: 16 },
+  { _id: 'Nicolas Otamendi', value: 17 },
+  { _id: 'Alex Sandro', value: 14 },
+  { _id: 'Hector Bellerin', value: 6 },
+  { _id: 'Antony', value: 34 },
+  { _id: 'Mohamed Salah', value: 245 },
+  { _id: 'Alvaro Morata', value: 134 },
+  { _id: 'Jose Gimenez', value: 9 },
+  { _id: 'Federico Chiesa', value: 65 },
+  { _id: 'Ferran Torres', value: 47 },
+  { _id: 'Raphael Guerreiro', value: 43 },
+  { _id: 'Kobbie Mainoo', value: 5 },
+  { _id: 'Chris Smalling', value: 19 },
+  { _id: 'Richarlison', value: 88 },
+  { _id: 'Cody Gakpo', value: 65 },
+  { _id: 'Luke Shaw', value: 4 },
+  { _id: 'Alexis Sanchez', value: 77 },
+  { _id: 'Paulo Dybala', value: 126 },
+  { _id: 'Roberto Firmino', value: 120 }
+]
+Type "it" for more
+footballexample>
